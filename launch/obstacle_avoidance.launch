@@ -1,0 +1,20 @@
+<launch>
+
+  <node pkg="argus_move" type="obstacle_avoidance" name="obstacle_avoidance" output="screen">
+     <!--<remap from="/scan_testing/cmd_vel" to="keyop_vel_smoother/raw_cmd_vel"/> -->
+  </node>
+
+
+
+  <node pkg="depthimage_to_laserscan" name="depthimage_to_laserscan" type="depthimage_to_laserscan">
+		<remap from="image" to="/camera/depth/image_raw"/>
+		<remap from="scan" to="/scan"/>
+		<param name="output_frame_id" value="camera_depth_frame" />
+		<param name="range_min" value="0.485" />
+    <param name="range_max" value="10.00" />
+    <param name="scan_height" value="3" />
+  </node>
+
+
+</launch>
+

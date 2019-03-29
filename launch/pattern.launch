@@ -1,6 +1,6 @@
 <launch>
   <node pkg="argus_move" type="pattern" name="pattern" output="screen">
-    <remap from="/pattern/cmd_vel" to="keyop_vel_smoother/raw_cmd_vel"/>
+    <!--<remap from="/pattern/cmd_vel" to="keyop_vel_smoother/raw_cmd_vel"/>-->
   </node>
 </launch>
 

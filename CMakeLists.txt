@@ -14,6 +14,10 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  sensor_msgs
+  move_base_msgs
+  actionlib
+  tf
 )
 
 ## System dependencies are found with CMake's conventions
@@ -203,3 +207,15 @@ include_directories(
 add_executable(pattern src/pattern.cpp)
 target_link_libraries(pattern ${catkin_LIBRARIES})
 add_dependencies(pattern argus_move_generate_messages_cpp)
+
+add_executable(obstacle_avoidance src/obstacle_avoidance.cpp)
+target_link_libraries(obstacle_avoidance ${catkin_LIBRARIES})
+add_dependencies(obstacle_avoidance argus_move_generate_messages_cpp)
+
+add_executable(map_navigation src/map_navigation.cpp)
+target_link_libraries(map_navigation ${catkin_LIBRARIES})
+add_dependencies(map_navigation argus_move_generate_messages_cpp)
+
+add_executable(simulator src/simulator.cpp)
+target_link_libraries(simulator ${catkin_LIBRARIES})
+add_dependencies(simulator argus_move_generate_messages_cpp)
