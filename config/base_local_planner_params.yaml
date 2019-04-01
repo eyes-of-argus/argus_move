@@ -25,16 +25,17 @@ DWAPlannerROS:
 
 # Goal Tolerance Parameters
   # yaw_goal_tolerance: 0.3  # 0.05
-  yaw_goal_tolerance: 0.30  # 0.05
+  yaw_goal_tolerance: 0.15  # 0.05
 
   # xy_goal_tolerance: 0.15  # 0.10
-  xy_goal_tolerance: 0.15  # 0.10
+  xy_goal_tolerance: 0.10  # 0.10
 
   # latch_xy_goal_tolerance: false
   latch_xy_goal_tolerance: true
 
 # Forward Simulation Parameters
-  sim_time: 1.0       # 1.7
+  #sim_time: 1.0       # 1.7
+  sim_time: 1.3       # 1.7
   vx_samples: 6       # 3
   vy_samples: 1       # diff drive robot, there is only one sample
   vtheta_samples: 20  # 20

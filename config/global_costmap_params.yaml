@@ -13,7 +13,7 @@ global_costmap:
 
   # http://wiki.ros.org/navigation/Tutorials/RobotSetup
     # The "static_map" parameter determines whether or not the costmap should initialize itself based on a map served by the map_server. 
-    # If you aren't using an existing map or map server, set the static_map parameter to false. 
+    # If you aren't using an existinsg map or map server, set the static_map parameter to false. 
 
   # The rolling_window parameter keeps the robot in the center of the costmap as it moves throughout the world, 
   # dropping obstacle information from the map as the robot moves too far from a given area.
