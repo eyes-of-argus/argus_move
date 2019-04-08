@@ -72,16 +72,6 @@ public:
     if (direction == 3)
       theta = 360.0;
 
-    // double theta = 270.0;
-    // if (direction == 1)
-    //   theta = 180.0;
-
-    // if (direction == 2)
-    //   theta = 90.0;
-
-    // if (direction == 3)
-    //   theta = 360.0;
-
     double radians = theta * (M_PI/180);
     tf::Quaternion quaternion;
     quaternion = tf::createQuaternionFromYaw(radians);
@@ -101,16 +91,6 @@ public:
         goal[i].target_pose.pose.position.x = temp_distance;
         goal[i].target_pose.pose.position.y = distance;
         break;
-
-      // case 1:
-      //   goal[i].target_pose.pose.position.x = distance;
-      //   goal[i].target_pose.pose.position.y = -distance;
-      //   break;
-      // case 2:
-      //   goal[i].target_pose.pose.position.x = temp_distance;
-      //   goal[i].target_pose.pose.position.y = -distance;
-      //   break;
-
       case 3:
         goal[i].target_pose.pose.position.x = temp_distance;
         goal[i].target_pose.pose.position.y = reverse_distance;
@@ -125,19 +105,19 @@ public:
   }
 
   void scanHandler(const std_msgs::Bool::ConstPtr& stop){
-     if(stop->data == true){
-        sit = true;
-        cancel_trigger++;
-     }
-     else{
-        sit = false;
-        cancel_trigger = 0;
-     }
+    //  if(stop->data == true){
+    //     sit = true;
+    //     cancel_trigger++;
+    //  }
+    //  else{
+    //     sit = false;
+    //     cancel_trigger = 0;
+    //  }
 
-     //ONLY send cancel goal once when we keep continuously receice pause command 
-     if (cancel_trigger == 1){
-        ac.cancelGoal();
-     }
+    //  //ONLY send cancel goal once when we keep continuously receice pause command 
+    //  if (cancel_trigger == 1){
+    //     ac.cancelGoal();
+    //  }
      
   }
 
@@ -147,7 +127,16 @@ public:
     if (ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED){
       ROS_INFO("FINISHED");
       goal_index++;
+
+      ros::Rate rate(10);
+      ros::Duration turn_timeout(2);
+      ros::Time start_time = ros::Time::now();
+      while (ros::Time::now() - start_time < turn_timeout){
+          rate.sleep();
+      }
+
       sendCoordinates(goal_index);
+
     }
       
     if (ac.getState() == actionlib::SimpleClientGoalState::ABORTED || ac.getState() == actionlib::SimpleClientGoalState::PREEMPTED){
