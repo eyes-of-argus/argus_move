@@ -216,6 +216,10 @@ add_executable(map_navigation src/map_navigation.cpp)
 target_link_libraries(map_navigation ${catkin_LIBRARIES})
 add_dependencies(map_navigation argus_move_generate_messages_cpp)
 
+add_executable(line_navigation src/line_navigation.cpp)
+target_link_libraries(line_navigation ${catkin_LIBRARIES})
+add_dependencies(line_navigation argus_move_generate_messages_cpp)
+
 add_executable(simulator src/simulator.cpp)
 target_link_libraries(simulator ${catkin_LIBRARIES})
 add_dependencies(simulator argus_move_generate_messages_cpp)

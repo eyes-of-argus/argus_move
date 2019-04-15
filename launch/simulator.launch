@@ -1,9 +1,17 @@
 <launch>
+
   <node pkg="argus_move" type="simulator" name="simulator" output="screen">
     <remap from="/simulator_test" to="/simulator_test"/>
   </node>
 
+<!--
   <node pkg="argus_move" type="map_navigation" name="map_navigation" output="screen"> 
     <remap from="/simulator_test" to="/simulator_test"/>
   </node>
+-->
+
+  <node pkg="argus_move" type="line_navigation" name="line_navigation" output="screen"> 
+    <remap from="/simulator_test" to="/simulator_test"/>
+  </node>
+
 </launch>
