@@ -223,3 +223,8 @@ add_dependencies(line_navigation argus_move_generate_messages_cpp)
 add_executable(simulator src/simulator.cpp)
 target_link_libraries(simulator ${catkin_LIBRARIES})
 add_dependencies(simulator argus_move_generate_messages_cpp)
+
+add_executable(known_map_navigation src/known_map_navigation.cpp)
+target_link_libraries(known_map_navigation ${catkin_LIBRARIES})
+add_dependencies(known_map_navigation argus_move_generate_messages_cpp)
+

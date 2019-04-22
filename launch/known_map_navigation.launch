@@ -1,0 +1,6 @@
+<launch>
+  
+  <node pkg="argus_move" type="known_map_navigation" name="known_map_navigation" output="screen"> 
+  </node>
+
+</launch>

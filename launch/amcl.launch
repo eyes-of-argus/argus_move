@@ -1,0 +1,58 @@
+<launch>
+  <param name="/use_sim_time" value="true"/>
+
+  <!-- Adding more stuffs for safety-->
+  <include file="$(find turtlebot_navigation)/launch/includes/velocity_smoother.launch.xml"/>
+  <include file="$(find turtlebot_navigation)/launch/includes/safety_controller.launch.xml"/>
+
+  <!-- Start the core -->
+  <include file="$(find turtlebot_bringup)/launch/minimal.launch"></include> 
+  
+    <!-- 3D sensor -->
+  <arg name="3d_sensor" default="$(env TURTLEBOT_3D_SENSOR)"/>
+  <include file="$(find turtlebot_bringup)/launch/3dsensor.launch">
+    <arg name="rgb_processing" value="false" />
+    <arg name="depth_registration" value="false" />
+    <arg name="depth_processing" value="false" />
+    <arg name="scan_topic" value="/scan" />
+  </include>
+  
+  <!-- Map server -->
+  <arg name="map_file" default="$(env TURTLEBOT_MAP_FILE)"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" /> 
+
+  <!-- AMCL -->
+  <arg name="custom_amcl_launch_file" default="$(find turtlebot_navigation)/launch/includes/amcl/$(arg 3d_sensor)_amcl.launch.xml"/>
+  <arg name="initial_pose_x" default="0.0"/> 
+  <arg name="initial_pose_y" default="0.0"/>
+  <arg name="initial_pose_a" default="0.0"/>
+
+  <include file="$(arg custom_amcl_launch_file)">
+    <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
+    <arg name="initial_pose_y" value="$(arg initial_pose_y)"/>
+    <arg name="initial_pose_a" value="$(arg initial_pose_a)"/>
+  </include>
+
+  <!--- turtlebot_navigation/laser/move_base_turtlebot_laser.launch" --> 
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+      <rosparam file="$(find argus_move)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+      <rosparam file="$(find argus_move)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+      <rosparam file="$(find argus_move)/config/local_costmap_params.yaml" command="load" />
+      <rosparam file="$(find argus_move)/config/global_costmap_params.yaml" command="load" />
+      <rosparam file="$(find argus_move)/config/base_local_planner_params.yaml" command="load" />
+      <rosparam file="$(find argus_move)/config/move_base_params.yaml" command="load" />
+
+      <!-- Disable rotation in place for clearing behavior, using reverse instead-->
+      <param name="/clearing_rotation_allowed" value="false" />
+      
+      <remap from="cmd_vel" to="navigation_velocity_smoother/raw_cmd_vel"/>
+  </node>
+
+  <!-- http://wiki.ros.org/turtlebot_navigation/Tutorials/Autonomously%20navigate%20in%20a%20known%20map 
+  -->
+
+  <!-- launch custom map
+  roslaunch argus_move amcl.launch map_file:= map_name.yaml
+  roslaunch argus_move amcl.launch map_file:=/home/argus/Desktop/video_map.yaml   -->
+
+</launch>
